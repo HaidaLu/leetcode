@@ -101,4 +101,6 @@ public int searchRightOver(int[] nums, int target) {
 ```
 
 - nums[mid] <= target -> left = mid + 1
+- return left - 1
   - 对 `left` 的更新必须是 `left = mid + 1`，就是说 while 循环结束时，`nums[left]` 一定不等于 `target` 了，而 `nums[left-1]` 可能是 `target`。
+
