@@ -3,5 +3,5 @@
 
 ### Search
 
-[1. BinarySearch](Search#1:BinarySearch.md)
+[1. BinarySearch]([BinarySearch.md)
 
