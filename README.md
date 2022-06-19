@@ -1,2 +1,7 @@
 # leetcode
-My leetcode summary &amp; notes
+## Algorithm
+
+### Search
+
+[1. BinarySearch](Search#1:BinarySearch.md)
+
