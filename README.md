@@ -1,7 +1,7 @@
 # leetcode
 ## Algorithm
 
-- Search
+#### Search
 
 [1. BinarySearch](BinarySearch.md)
 
@@ -11,8 +11,9 @@
 
 [4. Backtracing](Backtracing.md)
 
-- [Subsequence](subSequence.md)
-- [SlidingWindow](滑动窗口.md)
+#### [Subsequence](subSequence.md)
+
+#### [SlidingWindow](滑动窗口.md)
 
 注: 属于看
 
