@@ -5,13 +5,11 @@
 #### 组合
 
 77. 组合（元素无重不可复选） 
+78. 组合(元素无重不可复选)
+79. 组合总和II (元素无重可复选)
+80. 组合总和 (元素可重不可复选)
 
-216. 组合(元素无重不可复选)
-
-39. 组合总和II (元素无重可复选)
-40. 组合总和 (元素可重不可复选)
-
-17. <u>电话号码的字母组合</u>
+17. 电话号码的字母组合
 
 #### 子集(Subset)
 
@@ -26,9 +24,9 @@
 
 #### 分割
 
-131. <u>分割回文串</u>			
+131. 分割回文串			
 
-93. <u>复原IP地址</u>
+93. 复原IP地址
 
 #### 棋盘问题
 
@@ -38,7 +36,7 @@
 
 #### 其他
 
-491. <u>递增子序列</u>
+491. 递增子序列
 
 332. <u>重新安排行程</u>
 
@@ -75,7 +73,22 @@ class Solution {
 }
 ```
 
-## 组合子集排列问题
+### Java 中的数据结构
+
+#### 字符串
+
+```java
+StringBuilder track = new StringBuilder();
+res.add(track.toString());
+track.append(c);
+track.deleteCharAt(track.length() - 1);
+```
+
+
+
+
+
+## 1. 组合子集排列问题
 
 ### 元素无重不可复选 
 
@@ -165,6 +178,147 @@ void backtrack(int[] nums, int start) {
 
 
 
+
+## 2. 分割问题
+
+1. 考虑好辅助的函数, 使得满足分割条件
+
+2. 横向的遍历 for, i为右边的index, 为right
+
+#### 131. 分割回文串
+
+```java
+class Solution {
+    List<List<String>> res = new LinkedList<>();
+    LinkedList<String> track = new LinkedList<>();
+    public List<List<String>> partition(String s) {
+        if (s.isEmpty()) {
+            return res;
+        }
+        backtrack(s, 0);
+        return res;
+    }
+    private void backtrack(String s, int left) {
+        // 结束条件
+        if (left == s.length()) {
+            res.add(new LinkedList<>(track));
+            return;
+        }
+        for (int right = left; right < s.length(); right++) {
+            if (isPalindrome(s, left, right)) { // if this part is palindrome 
+                track.add(s.substring(left, right + 1));
+                backtrack(s, right + 1);
+                track.removeLast();
+            } 
+        }
+    }
+    boolean isPalindrome(String s, int left, int right) {
+        while (left <= right) {
+            if (s.charAt(left) != s.charAt(right)) return false;
+            left++;
+            right--;
+        }
+        return true;
+    }
+}
+```
+
+
+
+#### 93. 复原IP地址
+
+```java
+class Solution {
+    List<String> res = new ArrayList<>();
+    StringBuilder track= new StringBuilder();
+    public List<String> restoreIpAddresses(String s) {
+        
+        backtrack(s, 0, 0);
+        return res;
+    }
+    
+    private void backtrack(String s, int dots, int index) {
+        if (dots == 3) {
+            if (isValid(s.substring(index))) {
+                track.append("." + s.substring(index));
+                res.add(track.toString());
+            }
+            return;
+        }
+        
+        for (int right = index; right < s.length(); right++) {
+            if (isValid(s.substring(index, right + 1))) {
+                int length = track.length();
+                if (dots == 0) {
+                    track.append(s.substring(index, right + 1));
+                } else {
+                    track.append("." + s.substring(index, right+ 1));
+                }
+                backtrack(s, dots + 1, right+1);
+                track.setLength(length);
+            }
+        }
+    }
+    
+    private boolean isValid(String s) {
+        if (s.length() > 1 && s.charAt(0) == '0') return false;
+        if (s.length() == 0 || s.length() > 3) return false;
+        if (Integer.valueOf(s) > 255) return false;
+        
+        return true;
+    }
+} 
+```
+
+
+
+### 3. 子增子序列
+
+- 类似于去重的子集问题, 但是, 子序列 不能改变原有nums的顺序, 因此, 原来的去重问题不能解
+
+- 这里的去重 就是每到新的一层都会建立一个新的used数组(之前一层会清空) ,那就是在for循环前面建立新的used数组即可.
+
+![491. 递增子序列1](https://img-blog.csdnimg.cn/20201124200229824.png)
+
+```java
+class Solution {
+    List<List<Integer>> res = new LinkedList<>();
+    LinkedList<Integer> track = new LinkedList<>();
+    public List<List<Integer>> findSubsequences(int[] nums) {
+        backtrack(nums, 0);
+        return res;
+    }
+    
+    private void backtrack(int[] nums, int start) {
+        // end condition
+        if (track.size() > 1) {
+            res.add(new LinkedList(track));
+        }
+        int[] used = new int[201]; // 只定义本层 到了新的一层会被清空
+        
+        for (int i = start; i < nums.length; i++) {
+            if (!track.isEmpty() && nums[i] < track.get(track.size() - 1) || (used[nums[i] + 100] == 1)) {
+                continue;
+            }
+            used[nums[i] + 100] = 1;
+            track.add(nums[i]);
+            
+            backtrack(nums, i+1);
+            
+            track.removeLast();
+        }
+        //     4767
+    }
+}
+```
+
+
+
+
+
+
+
+-------------------------------
 
 Created: April 10, 2022 11:21 PM
 Tags: N皇后, 排列/组合/子集
