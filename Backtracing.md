@@ -1,5 +1,9 @@
 # 搜索 3. 回溯算法 Backtracing
 
+### **极易出错的点**
+
+- 如果Backtracking函数 设置了指针, 比如`private void backtracking( int n, int left, int right)` 那在指针移动时, 不能用left++, 而应该规规矩矩用left+1! 不然会出错
+
 题目列表
 
 #### 组合
@@ -37,10 +41,11 @@
 #### 其他
 
 491. 递增子序列
+492. <u>重新安排行程</u>
 
-332. <u>重新安排行程</u>
+#### 合法括号的生成
 
-
+[22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 
 ## 基本模板
 
